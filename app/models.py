@@ -1,8 +1,10 @@
 from datetime import datetime
-from app import db, login
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
 from hashlib import md5
+from time import time
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+import jwt
+from app import app, db, login
 
 
 followers = db.Table(
@@ -74,6 +76,11 @@ class User(UserMixin, db.Model):
         return User.query.get(id)
 
 
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
@@ -82,11 +89,3 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
-
-
-@login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
-
-
-
