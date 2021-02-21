@@ -64,7 +64,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
+    resources = db.relationship('Resource', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     followed = db.relationship(
@@ -99,12 +99,12 @@ class User(UserMixin, db.Model):
         return self.followed.filter(
             followers.c.followed_id == user.id).count() > 0
 
-    def followed_posts(self):
-        followed = Post.query.join(
-            followers, (followers.c.followed_id == Post.user_id)).filter(
+    def followed_resources(self):
+        followed = Resource.query.join(
+            followers, (followers.c.followed_id == Resource.user_id)).filter(
                 followers.c.follower_id == self.id)
-        own = Post.query.filter_by(user_id=self.id)
-        return followed.union(own).order_by(Post.timestamp.desc())
+        own = Resource.query.filter_by(user_id=self.id)
+        return followed.union(own).order_by(Resource.timestamp.desc())
 
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
@@ -127,13 +127,16 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-class Post(SearchableMixin, db.Model):
-    __searchable__ = ['body']
+class Resource(SearchableMixin, db.Model):
+    __searchable__ = ['desc', 'name', 'user_id', 'idioma', 'type']
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    name = db.Column(db.String(140))
+    type = db.Column(db.String(140))
+    idioma = db.Column(db.String(5))
+    desc = db.Column(db.String(140))
+    link = db.Column(db.String(140))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    language = db.Column(db.String(5))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __repr__(self):
-        return '<Post {}>'.format(self.body)
+        return '<Resource {}>'.format(self.name)

@@ -1,6 +1,6 @@
 from flask import request
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import StringField, SubmitField, TextAreaField, SelectField
 from wtforms.validators import ValidationError, DataRequired, Length
 from flask_babel import _, lazy_gettext as _l
 from app.models import User
@@ -39,7 +39,15 @@ class EmptyForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-class PostForm(FlaskForm):
-    post = TextAreaField(_l('Say something'), validators=[DataRequired()])
+class ResourceForm(FlaskForm):
+    name = TextAreaField(_l('Nom o títol del recurs:'), validators=[DataRequired()])
+    type = SelectField(_l('Tipus de recurs:'),
+                       choices=[('act', 'Activitat'), ('conc', 'Il·lustració d\'un concepte'), ('lloc', 'Lloc d\'interès'), ('altres', 'Altres')],
+                       validators=[DataRequired()])
+    desc = TextAreaField(_l('Descripció:'), validators=[DataRequired()])
+    idioma = SelectField(_l('Idioma:'),
+                         choices=[('ca', 'Català'), ('es', 'Castellà'), ('en', 'Anglès'), ('other', 'Altres')],
+                         validators=[DataRequired()])
+    link = TextAreaField(_l('Enllaç:'), validators=[DataRequired()])
     submit = SubmitField(_l('Submit'))
 

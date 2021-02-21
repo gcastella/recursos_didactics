@@ -7,8 +7,8 @@
     {{ wtf.quick_form(form) }}
     <br>
     {% endif %}
-    {% for post in posts %}
-        {% include '_post.html' %}
+    {% for recurs in recursos %}
+        {% include '_recurs.html' %}
     {% endfor %}
     <nav aria-label="...">
         <ul class="pager">
@@ -19,7 +19,7 @@
             </li>
             <li class="next{% if not next_url %} disabled{% endif %}">
                 <a href="{{ next_url or '#' }}">
-                    {{ _('Older posts') }} <span aria-hidden="true">&rarr;</span>
+                    {{ _('Other') }} <span aria-hidden="true">&rarr;</span>
                 </a>
             </li>
         </ul>
