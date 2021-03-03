@@ -5,7 +5,7 @@
         <tr>
             <td width="256px"><img src="{{ user.avatar(256) }}"></td>
             <td>
-                <h1>{{ _('User') }}: {{ user.username }}</h1>
+                <h1>{{ user.username }}</h1>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                 {% if user.last_seen %}
                 <p>{{ _('Last seen on') }}: {{ moment(user.last_seen).format('LLL') }}</p>
@@ -31,21 +31,21 @@
             </td>
         </tr>
     </table>
-    {% for recurs in recursos %}
+    <div class="container">
+    <h2>Recursos favorits</h2>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Recurs</th>
+            <th>Tipus</th>
+            <th>Idioma</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for recurs in resources %}
         {% include '_recurs.html' %}
-    {% endfor %}
-    <nav aria-label="...">
-        <ul class="pager">
-            <li class="previous{% if not prev_url %} disabled{% endif %}">
-                <a href="{{ prev_url or '#' }}">
-                    <span aria-hidden="true">&larr;</span> {{ _('Newer resources') }}
-                </a>
-            </li>
-            <li class="next{% if not next_url %} disabled{% endif %}">
-                <a href="{{ next_url or '#' }}">
-                    {{ _('Other') }} <span aria-hidden="true">&rarr;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
 {% endblock %}

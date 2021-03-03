@@ -40,13 +40,19 @@ class EmptyForm(FlaskForm):
 
 
 class ResourceForm(FlaskForm):
-    name = TextAreaField(_l('Nom o títol del recurs:'), validators=[DataRequired()])
-    type = SelectField(_l('Tipus de recurs:'),
-                       choices=[('act', 'Activitat'), ('conc', 'Il·lustració d\'un concepte'), ('lloc', 'Lloc d\'interès'), ('altres', 'Altres')],
-                       validators=[DataRequired()])
-    desc = TextAreaField(_l('Descripció:'), validators=[DataRequired()])
+    nom = TextAreaField(_l('Nom o títol del recurs:'), validators=[DataRequired()])
+    tipus = SelectField(_l('Tipus de recurs:'),
+                        choices=[
+                            ('Blog d\'activitats', 'Blog d\'activitats'),
+                            ('Activitat', 'Activitat'),
+                            ('Concepte', 'Il·lustració de conceptes'),
+                            ('Lloc d\interès', 'Lloc d\'interès'),
+                            ('Altres', 'Altres')
+                        ],
+                        validators=[DataRequired()])
+    descripcio = TextAreaField(_l('Descripció:'), validators=[DataRequired()])
     idioma = SelectField(_l('Idioma:'),
-                         choices=[('ca', 'Català'), ('es', 'Castellà'), ('en', 'Anglès'), ('other', 'Altres')],
+                         choices=[('Català', 'Català'), ('Castellà', 'Castellà'), ('Anglès', 'Anglès'), ('Altres', 'Altres')],
                          validators=[DataRequired()])
     link = TextAreaField(_l('Enllaç:'), validators=[DataRequired()])
     submit = SubmitField(_l('Submit'))

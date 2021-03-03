@@ -101,8 +101,7 @@ class User(UserMixin, db.Model):
 
     def followed_resources(self):
         followed = Resource.query.join(
-            followers, (followers.c.followed_id == Resource.user_id)).filter(
-                followers.c.follower_id == self.id)
+            followers, (followers.c.followed_id == Resource.user_id)).filter(followers.c.follower_id == self.id)
         own = Resource.query.filter_by(user_id=self.id)
         return followed.union(own).order_by(Resource.timestamp.desc())
 
@@ -128,15 +127,15 @@ def load_user(id):
 
 
 class Resource(SearchableMixin, db.Model):
-    __searchable__ = ['desc', 'name', 'user_id', 'idioma', 'type']
+    __searchable__ = ['descripcio', 'nom', 'user_id', 'idioma', 'tipus']
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(140))
-    type = db.Column(db.String(140))
-    idioma = db.Column(db.String(5))
-    desc = db.Column(db.String(140))
+    nom = db.Column(db.String(50))
+    tipus = db.Column(db.String(50))
+    idioma = db.Column(db.String(50))
+    descripcio = db.Column(db.String(140))
     link = db.Column(db.String(140))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __repr__(self):
-        return '<Resource {}>'.format(self.name)
+        return '<Resource {}>'.format(self.nom)

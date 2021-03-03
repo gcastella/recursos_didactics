@@ -1,8 +1,8 @@
-"""Canvi posts per recursos
+"""Schema inicial
 
-Revision ID: 0ca0041e8299
+Revision ID: 1c3d053f677d
 Revises: 
-Create Date: 2021-02-18 18:21:55.720515
+Create Date: 2021-02-22 17:14:58.121587
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0ca0041e8299'
+revision = '1c3d053f677d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -37,10 +37,10 @@ def upgrade():
     )
     op.create_table('resource',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=140), nullable=True),
-    sa.Column('type', sa.String(length=140), nullable=True),
-    sa.Column('language', sa.String(length=5), nullable=True),
-    sa.Column('desc', sa.String(length=140), nullable=True),
+    sa.Column('nom', sa.String(length=50), nullable=True),
+    sa.Column('tipus', sa.String(length=50), nullable=True),
+    sa.Column('idioma', sa.String(length=50), nullable=True),
+    sa.Column('descripcio', sa.String(length=140), nullable=True),
     sa.Column('link', sa.String(length=140), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('timestamp', sa.DateTime(), nullable=True),

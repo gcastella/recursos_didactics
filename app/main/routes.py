@@ -23,45 +23,29 @@ def before_request():
 @bp.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
+    resources = current_user.followed_resources()
+    return render_template('index.html', title=_('Home'), resources=resources)
+
+
+@bp.route('/', methods=['GET', 'POST'])
+@bp.route('/add', methods=['GET', 'POST'])
+@login_required
+def add():
     form = ResourceForm()
     if form.validate_on_submit():
         resource = Resource(
-            name=form.name,
-            type=form.type,
-            desc=form.desc,
-            idioma=form.idioma,
-            link=form.link,
+            nom=form.nom.data,
+            tipus=form.tipus.data,
+            descripcio=form.descripcio.data,
+            idioma=form.idioma.data,
+            link=form.link.data,
             author=current_user
         )
         db.session.add(resource)
         db.session.commit()
-        flash(_('Your resource is now live!'))
+        flash(_('S\'ha afegit el nou recurs!'))
         return redirect(url_for('main.index'))
-    page = request.args.get('page', 1, type=int)
-    resources = current_user.followed_resources().paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('main.index', page=resources.next_num) \
-        if resources.has_next else None
-    prev_url = url_for('main.index', page=resources.prev_num) \
-        if resources.has_prev else None
-    return render_template('index.html', title=_('Home'), form=form,
-                           resources=resources.items, next_url=next_url,
-                           prev_url=prev_url)
-
-
-@bp.route('/explore')
-@login_required
-def explore():
-    page = request.args.get('page', 1, type=int)
-    resources = Resource.query.order_by(Resource.timestamp.desc()).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('main.explore', page=resources.next_num) \
-        if resources.has_next else None
-    prev_url = url_for('main.explore', page=resources.prev_num) \
-        if resources.has_prev else None
-    return render_template('index.html', title=_('Explore'),
-                           resources=resources.items, next_url=next_url,
-                           prev_url=prev_url)
+    return render_template('add.html', title=_('Home'), form=form)
 
 
 @bp.route('/user/<username>')

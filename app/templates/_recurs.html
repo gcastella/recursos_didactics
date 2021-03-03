@@ -1,36 +1,6 @@
-    <table class="table table-hover">
-        <tr>
-            <td width="70px">
-                <a href="{{ url_for('main.user', username=resource.author.username) }}">
-                    <img src="{{ resource.author.avatar(70) }}" />
-                </a>
-            </td>
-            <td>
-                <span id="resource{{ resource.id }}name">
-                    <a href="{{ resource.link }}">
-                        {{ resource.name }}
-                    </a>
-                </span>
-            </td>
-            <td>
-                <span id="resource{{ resource.id }}type">{{ resource.type }}</span>
-            </td>
-            <td>
-                <span id="resource{{ resource.id }}language">{{ resource.idioma }}</span>
-            </td>
-            <td>
-                <span id="resource{{ resource.id }}desc">{{ resource.desc }}</span>
-            </td>
-            <td>
-                {% set user_link %}
-                    <a href="{{ url_for('main.user', username=resource.author.username) }}">
-                        {{ resource.author.username }}
-                    </a>
-                {% endset %}
-                {{ _('%(username)', username=user_link) }}
-            </td>
-            <td>
-               {{ _('%(when)', when=moment(resource.timestamp).fromNow()) }}
-            </td>
-        </tr>
-    </table>
+<tr>
+    <td><a href="{{ recurs.link }}">{{ recurs.nom }}</a></td>
+    <td>{{ recurs.tipus }}</td>
+    <td>{{ recurs.idioma }}</td>
+</tr>
+
