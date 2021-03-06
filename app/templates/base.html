@@ -18,8 +18,9 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('main.index') }}">{{ _('Home') }}</a></li>
-                    <li><a href="{{ url_for('main.add') }}">{{ _('Afegir-ne!') }}</a></li>
+                    <li><a href="{{ url_for('main.index') }}">{{ _('Trending') }}</a></li>
+                    <li><a href="{{ url_for('main.explore') }}">{{ _('Explora') }}</a></li>
+                    <li><a href="{{ url_for('main.add') }}">{{ _('Nou recurs!') }}</a></li>
                 </ul>
                 {% if g.search_form %}
                 <form class="navbar-form navbar-left" method="get" action="{{ url_for('main.search') }}">

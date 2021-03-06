@@ -23,8 +23,8 @@ def before_request():
 @bp.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    resources = current_user.followed_resources()
-    return render_template('index.html', title=_('Home'), resources=resources)
+    resources = Resource.query.order_by(Resource.timestamp.desc()).limit(10).all()
+    return render_template('index.html', title=_('Home'), resources=resources, pagetitle=_('Recursos nous'))
 
 
 @bp.route('/', methods=['GET', 'POST'])
@@ -45,8 +45,14 @@ def add():
         db.session.commit()
         flash(_('S\'ha afegit el nou recurs!'))
         return redirect(url_for('main.index'))
-    return render_template('add.html', title=_('Home'), form=form)
+    return render_template('add.html', title=_('Home'), form=form, pagetitle=_('Recursos nous'))
 
+@bp.route('/explore')
+@login_required
+def explore():
+    resources = Resource.query.order_by(Resource.timestamp.desc())
+    return render_template('index.html', title=_('Explore'),
+                           resources=resources, pagetitle=_('Tots els recursos'))
 
 @bp.route('/user/<username>')
 @login_required
