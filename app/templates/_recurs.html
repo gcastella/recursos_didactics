@@ -1,6 +1,9 @@
-<tr>
+<tr class="recurs_row" id="row_{{ recurs.nom }}">
     <td><a href="{{ recurs.link }}">{{ recurs.nom }}</a></td>
     <td>{{ recurs.tipus }}</td>
     <td>{{ recurs.idioma }}</td>
+</tr>
+<tr class="recurs_desc_row" id="row_{{ recurs.nom }}_desc" style="display: none; ">
+    <td colspan="3"> > {{ recurs.descripcio }}</td>
 </tr>
 

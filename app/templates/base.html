@@ -1,5 +1,15 @@
 {% extends 'bootstrap/base.html' %}
 
+{% block head %}
+    {{super()}}
+    <script src="{{ url_for('static', filename='/js/main.js') }}"></script>
+    <style>
+        #recurs_desc_row tr>td {
+            padding-left: 15px;
+        }
+    </style>
+{% endblock %}
+
 {% block title %}
     {% if title %}{{ title }} - RRDM{% else %}{{ _('RRDM') }}{% endif %}
 {% endblock %}
